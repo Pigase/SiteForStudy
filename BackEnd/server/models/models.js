@@ -5,7 +5,7 @@ const User = sequelize.define('user',{
     id:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     email:{type: DataTypes.STRING, unique: true,},//не понятно
     password:{type: DataTypes.STRING},
-    email:{type: DataTypes.STRING,defaultValue: "User"},
+    role:{type: DataTypes.STRING,defaultValue: "User"},
 })
 
 const Basket = sequelize.define('basket',{
@@ -18,7 +18,7 @@ const BasketGame = sequelize.define('basket_game',{
 
 const Game = sequelize.define('game',{
     id:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    password:{type: DataTypes.STRING,unique: true, allowNull: false},
+    name:{type: DataTypes.STRING,unique: true, allowNull: false},
     price:{type: DataTypes.INTEGER, allowNull: false},
     rating:{type: DataTypes.INTEGER, defaultValue: 0},
     img:{type: DataTypes.STRING, allowNull: false},
