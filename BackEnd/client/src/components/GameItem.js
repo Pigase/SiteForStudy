@@ -17,7 +17,7 @@ const GameItem = ({game}) => {
           <Image 
             width={150}
             height={150}
-            src={game.img}
+            src={process.env.REACT_APP_API_URL + game.img}
           />
           <div className="mt-1 d-flex justify-content-between algin-items-center">
             <div>{game.name}</div>
