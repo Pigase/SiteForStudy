@@ -21,7 +21,7 @@ const GameItem = ({game}) => {
           />
           <div className="mt-1 d-flex justify-content-between algin-items-center">
             <div>{game.name}</div>
-            <div className="d-flex algin-items-center" >
+            <div className="d-flex align-items-center" >
                 <div>{game.rating}</div>
                 <Image
                  width={22}
@@ -30,7 +30,7 @@ const GameItem = ({game}) => {
             </div>
           </div>
           <div className="text-black-50">
-                Аркада
+                {game.type?.name || 'Не указан'}
           </div>
        </Card>
     </Col>

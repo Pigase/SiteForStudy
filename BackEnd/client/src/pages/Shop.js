@@ -8,6 +8,7 @@ import GameList from '../components/GameList';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 import { fetchDevelopers, fetchGames, fetchTypes } from '../http/GameAPI';
+import Pages from '../components/Pages';
 
 const Shop = observer(() => { 
   const {game} = useContext(Context)
@@ -15,8 +16,19 @@ const Shop = observer(() => {
   useEffect(() => {
     fetchTypes().then(data => game.setTypes(data))
     fetchDevelopers().then(data => game.setDevelopers(data))
-    fetchGames().then(data => game.setGames(data.rows))
+    fetchGames(null, null, 1, 3).then(data => {
+      game.setGames(data.rows)
+      game.setTotalCount(data.count)
+    })
   }, [])
+
+  useEffect(() => {
+    fetchGames(game.selectedType.id, game.selectedDeveloper.id, game.page, 3).then(data => {
+      game.setGames(data.rows)
+      game.setTotalCount(data.count)
+    })
+  }, [game.page, game.selectedType, game.selectedDeveloper])
+  
   return (
     <Container >
       <Row className="mt-3">
@@ -26,6 +38,7 @@ const Shop = observer(() => {
         <Col md= {10}>
             <DeveloperBar/>
             <GameList/>
+            <Pages/>
         </Col>
       </Row>
     </Container>

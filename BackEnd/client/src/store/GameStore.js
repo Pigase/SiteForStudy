@@ -12,6 +12,10 @@ export default class GameStore
 
         this._selectedType = {}
         this._selectedDeveloper = {}
+
+        this._page = 1
+        this._totalCount = 0
+        this._limit = 3
         makeAutoObservable(this)
     }
 
@@ -32,12 +36,24 @@ export default class GameStore
 
     setSelectedType(type)
     {
+        this.setPage(1)
         this._selectedType = type
     }
 
     setSelectedDeveloper(developer)
     {
+        this.setPage(1)
         this._selectedDeveloper = developer
+    }
+
+    setPage(page) 
+    {
+        this._page = page
+    }
+
+    setTotalCount(count)
+    {
+        this._totalCount = count
     }
 
     get types()
@@ -63,5 +79,20 @@ export default class GameStore
     get selectedDeveloper()
     {
         return this._selectedDeveloper
+    }
+
+    get totalCount() 
+    {
+        return this._totalCount
+    }
+
+    get page() 
+    {
+        return this._page
+    }
+
+    get limit() 
+    {
+        return this._limit
     }
 }

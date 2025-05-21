@@ -17,7 +17,7 @@ export const createDeveloper = async (developer) => {
 }
 
 export const fetchDevelopers = async () => {
-    const {data} = await $host.get('api/developer')
+    const {data} = await $host.get('api/developer',)
     return data
 }
 
@@ -26,8 +26,10 @@ export const createGame = async (game) => {
     return data
 }
 
-export const fetchGames = async () => {
-    const {data} = await $host.get('api/game')
+export const fetchGames = async (typeId, developerId, page, limit = 5) => {
+    const {data} = await $host.get('api/game', {params: {
+        typeId, developerId, page, limit
+    }})
     return data
 }
 
