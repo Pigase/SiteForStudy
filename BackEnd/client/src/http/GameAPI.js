@@ -37,3 +37,15 @@ export const fetchOneGame = async (id) => {
     const {data} = await $host.get('api/game/' + id)
     return data
 }
+
+export const checkUserRating = async (gameId) => {
+    const { data } = await $authHost.get(`/api/rating/check`, {
+        params: { gameId }
+    });
+    return data;
+};
+
+export const rateGame = async (gameId, rate) => {
+    const { data } = await $authHost.post('/api/rating/', { gameId, rate });
+    return data;
+};

@@ -37,13 +37,13 @@ export default class GameStore
     setSelectedType(type)
     {
         this.setPage(1)
-        this._selectedType = type
+        this._selectedType = this._selectedType.id === type.id ? {} : type;
     }
 
     setSelectedDeveloper(developer)
     {
         this.setPage(1)
-        this._selectedDeveloper = developer
+        this._selectedDeveloper = this._selectedDeveloper.id === developer.id ? {} : developer;
     }
 
     setPage(page) 
