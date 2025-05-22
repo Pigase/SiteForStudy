@@ -1,19 +1,19 @@
+// GameList.js
 import React, { useContext } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from "../index";
-import { Row } from 'react-bootstrap';
 import GameItem from './GameItem';
-
+import '../styles/GameList.css';
 
 const GameList = observer(() => { 
     const { game } = useContext(Context);
     
   return (
-    <Row className="d-flex">
+    <div className="game-list">
       {game.games.map(game =>
-         <GameItem key = {game.id} game ={game}/>
+         <GameItem key={game.id} game={game}/>
       )}
-    </Row>
+    </div>
   );
 })
 

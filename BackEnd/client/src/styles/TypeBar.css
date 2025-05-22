@@ -1,0 +1,39 @@
+/* TypeBar.css */
+.type-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.type-item {
+    padding: 12px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    font-size: 1rem;
+    color: #34495e;
+    background-color: #f8f9fa;
+}
+
+.type-item:hover {
+    background-color: #e9ecef;
+    transform: translateX(5px);
+}
+
+.type-item.active {
+    background-color: #3498db;
+    color: white;
+    font-weight: 500;
+}
+
+.active-indicator {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+}

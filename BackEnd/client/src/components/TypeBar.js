@@ -1,23 +1,24 @@
+// TypeBar.js
 import React, { useContext } from 'react';
 import {observer} from 'mobx-react-lite'
 import {Context} from "../index"
-import ListGroup from 'react-bootstrap/ListGroup'
+import '../styles/TypeBar.css';
 
 const TypeBar = observer(() => { 
     const {game} = useContext(Context)
   return (
-    <ListGroup>
+    <div className="type-bar">
       {game.types.map(type =>
-        <ListGroup.Item 
-            style={{cursor: 'pointer'}}
-            active = {type.id === game.selectedType.id}
+        <div 
+            className={`type-item ${type.id === game.selectedType.id ? 'active' : ''}`}
             onClick={() => game.setSelectedType(type)}
-            key = {type.id}
+            key={type.id}
         >
             {type.name}
-        </ListGroup.Item>
+            {type.id === game.selectedType.id && <span className="active-indicator"></span>}
+        </div>
       )}
-    </ListGroup>
+    </div>
   );
 })
 

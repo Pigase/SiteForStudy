@@ -1,47 +1,37 @@
+// GameItem.js
 import React from 'react';
-import { Card } from 'react-bootstrap';
-import Col from 'react-bootstrap/Col';
-import star from '../assets/StarForRatingShop.png';
-import Image from 'react-bootstrap/Image';
 import { useNavigate } from 'react-router-dom';
 import { GAME_ROUTE } from '../utils/consts';
 import { Context } from '../index';
 import { observer } from 'mobx-react-lite';
-import foto from '../assets/StarForRatingShop.png'
+import '../styles/GameItem.css';
 
 const GameItem = observer(({ game }) => { 
     const history = useNavigate();
     const { game: gameStore } = React.useContext(Context);
     
-    // Находим тип игры по typeId
     const gameType = gameStore.types.find(type => type.id === game.typeId);
     
     return (
-        <Col md={3} className="mt-3" onClick={() => history(GAME_ROUTE + '/' + game.id)}>
-            <Card style={{ width: 150, cursor: 'pointer' }} border={"light"}>
-                <Image 
-                    width={150}
-                    height={150}
+        <div className="game-item" onClick={() => history(GAME_ROUTE + '/' + game.id)}>
+            <div className="game-image-container">
+                <img
+                    className="game-image"
                     src={process.env.REACT_APP_API_URL + game.img}
-                    //alt={game.name}
+                    alt={game.name}
                 />
-                <div className="mt-1 d-flex justify-content-between align-items-center">
-                    <div>{game.name}</div>
-                    <div className="d-flex align-items-center">
-                        <div>{game.rating}</div>
-                        <Image
-                            width={22}
-                            height={22} 
-                            src={star}
-                            alt="Рейтинг"
-                        />
-                    </div>
+                <div className="game-rating">
+                    <span className="rating-value">{game.rating}</span>
+                    <span className="rating-icon">★</span>
                 </div>
-                <div className="text-black-50">
-                    {gameType?.name || 'Не указан'}
-                </div>
-            </Card>
-        </Col>
+            </div>
+            
+            <div className="game-info">
+                <h4 className="game-title">{game.name}</h4>
+                <span className="game-type">{gameType?.name || 'Не указан'}</span>
+                <div className="game-price">{game.price} $</div>
+            </div>
+        </div>
     );
 });
 

@@ -5,6 +5,7 @@ import { getBasket, removeFromBasket } from '../http/basketAPI';
 import { observer } from 'mobx-react-lite';
 import { SHOP_ROUTE } from '../utils/consts';
 import { Link } from 'react-router-dom';
+import '../styles/Basket.css'; // Создайте этот файл для дополнительных стилей
 
 const Basket = observer(() => {
     const { user } = useContext(Context);
@@ -21,72 +22,100 @@ const Basket = observer(() => {
     }, [user.isAuth]);
 
     const calculateTotal = (items) => {
-        const sum = items.reduce((acc, item) => acc + (item.game?.price ||  0), 0);
+        const sum = items.reduce((acc, item) => acc + (item.game?.price || 0), 0);
         setTotal(sum);
     };
 
     const handleRemove = async (id) => {
         await removeFromBasket(id);
         const updatedBasket = await getBasket();
-        setBasketItems(updatedBasket.basket_games ||  []);
+        setBasketItems(updatedBasket.basket_games || []);
         calculateTotal(updatedBasket.basket_games || []);
     };
 
     return (
-        <Container className="epic-cart-container">
-            <h1 className="epic-cart-title">ВАША КОРЗИНА</h1>
+        <Container className="basket-container">
+            <div className="basket-header">
+                <h1 className="basket-title">Ваша корзина</h1>
+                <span className="basket-count">{basketItems.length} {basketItems.length === 1 ? 'товар' : basketItems.length < 5 ? 'товара' : 'товаров'}</span>
+            </div>
             
             {basketItems.length > 0 ? (
-                <>
-                    {basketItems.map(item => (
-                        <div key={item.id} className="epic-cart-item">
-                            <Row className="align-items-center">
-                                <Col md={4}>
-                                    <img
-                                        src={process.env.REACT_APP_API_URL + item.game.img}
-                                        className="epic-cart-image"
-                                        alt={item.game.name}
-                                    />
-                                </Col>
-                                <Col md={4}>
-                                    <h5 className="epic-cart-product-name">{item.game.name}</h5>
-                                    <p className="epic-cart-price">{item.game.price} руб.</p>
-                                </Col>
-                                <Col md={4}>
-                                    <button 
-                                        className="epic-cart-delete-btn"
-                                        onClick={() => handleRemove(item.id)}
-                                    >
-                                        Удалить
-                                    </button>
-                                </Col>
-                            </Row>
-                        </div>
-                    ))}
-                    
-                    <hr className="epic-cart-divider" />
-                    
-                    <div className="epic-cart-total">
-                        <span>Итого:</span>
-                        <span className="epic-cart-total-price">{total} руб.</span>
+                <div className="basket-content">
+                    <div className="basket-items">
+                        {basketItems.map(item => (
+                            <Card key={item.id} className="basket-item">
+                                <Row className="align-items-center">
+                                    <Col xs={4} md={3} lg={2}>
+                                        <div className="basket-item-img-container">
+                                            <img
+                                                src={process.env.REACT_APP_API_URL + item.game.img}
+                                                className="basket-item-img"
+                                                alt={item.game.name}
+                                            />
+                                        </div>
+                                    </Col>
+                                    <Col xs={8} md={6} lg={7}>
+                                        <div className="basket-item-info">
+                                            <h5 className="basket-item-title">{item.game.name}</h5>
+                                            <div className="basket-item-price">{item.game.price} ₽</div>
+                                        </div>
+                                    </Col>
+                                    <Col xs={12} md={3} lg={3} className="mt-3 mt-md-0">
+                                        <Button 
+                                            variant="outline-danger"
+                                            className="basket-item-remove"
+                                            onClick={() => handleRemove(item.id)}
+                                        >
+                                            <i className="bi bi-trash"></i> Удалить
+                                        </Button>
+                                    </Col>
+                                </Row>
+                            </Card>
+                        ))}
                     </div>
                     
-                    <button className="epic-cart-checkout-btn">
-                        Оформить заказ
-                    </button>
-                </>
+                    <Card className="basket-summary">
+                        <Card.Body>
+                            <div className="summary-row">
+                                <span>Товары ({basketItems.length})</span>
+                                <span>{total} ₽</span>
+                            </div>
+                            <div className="summary-row">
+                                <span>Доставка</span>
+                                <span className="text-success">Бесплатно</span>
+                            </div>
+                            <hr className="summary-divider" />
+                            <div className="summary-row total">
+                                <span>Итого</span>
+                                <span className="basket-total">{total} ₽</span>
+                            </div>
+                            
+                            <Button variant="primary" className="checkout-btn">
+                                Перейти к оформлению
+                            </Button>
+                            
+                            <div className="continue-shopping">
+                                <Link to={SHOP_ROUTE} className="continue-link">
+                                    <i className="bi bi-arrow-left"></i> Продолжить покупки
+                                </Link>
+                            </div>
+                        </Card.Body>
+                    </Card>
+                </div>
             ) : (
-                <Card className="epic-empty-cart">
-        <Card.Body>
-            <Card.Title className="epic-empty-title">КОРЗИНА ПУСТА</Card.Title>
-            <Card.Text className="epic-empty-text">
-                Добавьте товары из каталога
-            </Card.Text>
-            <Link to={SHOP_ROUTE} className="epic-empty-btn">
-                Перейти в каталог
-            </Link>
-        </Card.Body>
-    </Card>
+                <Card className="empty-basket">
+                    <Card.Body className="text-center">
+                        <div className="empty-basket-icon">
+                            <i className="bi bi-cart-x"></i>
+                        </div>
+                        <h3 className="empty-basket-title">Ваша корзина пуста</h3>
+                        <p className="empty-basket-text">Добавьте товары из каталога, чтобы продолжить</p>
+                        <Link to={SHOP_ROUTE} className="empty-basket-btn">
+                            Перейти в каталог
+                        </Link>
+                    </Card.Body>
+                </Card>
             )}
         </Container>
     );

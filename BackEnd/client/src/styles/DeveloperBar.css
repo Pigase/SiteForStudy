@@ -1,0 +1,29 @@
+/* DeveloperBar.css */
+.developer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.developer-item {
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+}
+
+.developer-item:hover {
+    background-color: #e9ecef;
+    transform: translateY(-2px);
+}
+
+.developer-item.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+    font-weight: 500;
+}

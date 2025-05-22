@@ -1,0 +1,174 @@
+.game-page-container {
+  padding: 2rem 0;
+  max-width: 1200px;
+}
+
+.game-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.game-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.game-meta {
+  margin-top: 1rem;
+}
+
+.game-main-image {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.game-main-image:hover {
+  transform: scale(1.02);
+}
+
+.section-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: #3498db;
+}
+
+.game-description {
+  line-height: 1.8;
+  color: #555;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.spec-item {
+  padding: 0.8rem;
+  border-radius: 6px;
+}
+
+.spec-item.even {
+  background: #f8f9fa;
+}
+
+.spec-title {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.spec-value {
+  color: #555;
+  margin-left: 0.5rem;
+}
+
+.purchase-card {
+  border: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.price-block {
+  position: relative;
+}
+
+.price {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.discount-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+}
+
+.rating-block {
+  padding: 1rem 0;
+}
+
+.star-rating {
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin: 0 0.1rem;
+  transition: transform 0.2s;
+}
+
+.star-rating:hover {
+  transform: scale(1.2);
+}
+
+.rating-text {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.user-rating {
+  display: block;
+  margin-top: 0.3rem;
+  color: #3498db;
+  font-weight: 500;
+}
+
+.basket-btn {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.basket-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.requirements-card {
+  border: none;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.requirements-list {
+  list-style: none;
+  padding: 0;
+}
+
+.requirements-list li {
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+@media (max-width: 992px) {
+  .game-content {
+    flex-direction: column-reverse;
+  }
+  
+  .game-sidebar {
+    margin-bottom: 2rem;
+  }
+  
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+}

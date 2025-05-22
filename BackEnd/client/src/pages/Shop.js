@@ -1,7 +1,6 @@
+// Shop.js (главная страница)
 import React, { useContext, useEffect } from 'react';
-import { Form, Container, Button } from 'react-bootstrap';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
+import { Container, Row, Col } from 'react-bootstrap';
 import TypeBar from '../components/TypeBar';
 import DeveloperBar from '../components/DeveloperBar';
 import GameList from '../components/GameList';
@@ -9,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 import { fetchDevelopers, fetchGames, fetchTypes } from '../http/GameAPI';
 import Pages from '../components/Pages';
+import '../styles/Shop.css';
 
 const Shop = observer(() => { 
   const {game} = useContext(Context)
@@ -30,15 +30,34 @@ const Shop = observer(() => {
   }, [game.page, game.selectedType, game.selectedDeveloper])
   
   return (
-    <Container >
-      <Row className="mt-3">
-        <Col md= {2}>
+    <Container className="shop-container">
+      <div className="shop-header">
+        <h1 className="shop-title">Игровой каталог</h1>
+        <p className="shop-subtitle">Лучшие игры от ведущих разработчиков</p>
+      </div>
+      
+      <Row className="shop-content">
+        <Col md={3} className="sidebar-col">
+          <div className="sidebar-filter">
+            <h3 className="filter-title">Фильтры</h3>
             <TypeBar/>
+          </div>
         </Col>
-        <Col md= {10}>
+        
+        <Col md={9} className="main-content-col">
+          <div className="developers-section">
+            <h3 className="section-title">Разработчики</h3>
             <DeveloperBar/>
+          </div>
+          
+          <div className="games-section">
+            <h3 className="section-title">Игры</h3>
             <GameList/>
+          </div>
+          
+          <div className="pagination-section">
             <Pages/>
+          </div>
         </Col>
       </Row>
     </Container>
