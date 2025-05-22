@@ -36,8 +36,16 @@ const NavBar = observer(() => {
           <NavLink style={{color:'white'}} to = {SHOP_ROUTE}>МагазинИгр</NavLink>
           {user.isAuth ?
           <Nav className="ml-auto" style={{color:'white'}}>
+            
+                        <Button 
+                        className="me-3"
+                                variant="outline-light" 
+                                onClick={() => history('/about')}
+                            >
+                                О нас
+                            </Button>
             <Button 
-                     className="me-1"
+                     className="me-3"
                      variant="outline-light" 
                      onClick={() => history(BASKET_ROUTE)}
                 >

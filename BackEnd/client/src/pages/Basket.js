@@ -58,7 +58,7 @@ const Basket = observer(() => {
                                     <Col xs={8} md={6} lg={7}>
                                         <div className="basket-item-info">
                                             <h5 className="basket-item-title">{item.game.name}</h5>
-                                            <div className="basket-item-price">{item.game.price} ₽</div>
+                                            <div className="basket-item-price">{item.game.price} $</div>
                                         </div>
                                     </Col>
                                     <Col xs={12} md={3} lg={3} className="mt-3 mt-md-0">
@@ -79,16 +79,13 @@ const Basket = observer(() => {
                         <Card.Body>
                             <div className="summary-row">
                                 <span>Товары ({basketItems.length})</span>
-                                <span>{total} ₽</span>
+                                <span>{total} $</span>
                             </div>
-                            <div className="summary-row">
-                                <span>Доставка</span>
-                                <span className="text-success">Бесплатно</span>
-                            </div>
+
                             <hr className="summary-divider" />
                             <div className="summary-row total">
                                 <span>Итого</span>
-                                <span className="basket-total">{total} ₽</span>
+                                <span className="basket-total">{total} $</span>
                             </div>
                             
                             <Button variant="primary" className="checkout-btn">

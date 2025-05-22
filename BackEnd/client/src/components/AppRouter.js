@@ -3,6 +3,7 @@ import {Routes, Route, Navigate } from 'react-router-dom'
 import { authRoutes, publicRoutes } from '../routes';
 import { SHOP_ROUTE } from '../utils/consts';
 import { Context } from '..';
+import About from '../pages/About.js';
 
 const AppRouter = () => { 
     const {user} = useContext(Context)
@@ -21,6 +22,7 @@ const AppRouter = () => {
         )
       }
       <Route path="*" element={<Navigate to={SHOP_ROUTE} />}/>
+      <Route path="/about" element={<About />} />
     </Routes>
   );
 }

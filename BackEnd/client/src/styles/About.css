@@ -1,0 +1,184 @@
+.about-page {
+    padding: 3rem 0;
+}
+
+/* Герой секция */
+.about-hero {
+    min-height: 400px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    padding: 4rem 2rem;
+    border-radius: 15px;
+    margin-bottom: 4rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.hero-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    width: 100%;
+    height: 300px;
+    background: url('../assets/GameLogo.png') center/cover;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* Секции */
+.section-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: #3498db;
+}
+
+.section-subtitle {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+/* Преимущества */
+.features-section {
+    padding: 4rem 0;
+    margin: 3rem 0;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+}
+
+.feature-card {
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: #3498db;
+    margin-bottom: 1.5rem;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* История */
+.history-section {
+    padding: 4rem 0;
+    margin: 3rem 0;
+}
+
+.history-image {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Команда */
+.team-section {
+    padding: 4rem 0;
+    margin: 3rem 0;
+    background-color: #f8f9fa;
+    border-radius: 15px;
+}
+
+.team-member {
+    text-align: center;
+    padding: 2rem;
+}
+
+.team-photo {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    border: 5px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.team-member h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.position {
+    color: #3498db;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+/* CTA секция */
+.cta-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+    color: white;
+    border-radius: 15px;
+    margin: 3rem 0;
+}
+
+.cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
+    padding: 0.8rem 2.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .feature-card {
+        margin-bottom: 2rem;
+    }
+    
+    .history-section {
+        text-align: center;
+    }
+    
+    .history-image {
+        margin-bottom: 2rem;
+    }
+    
+    .team-member {
+        margin-bottom: 2rem;
+    }
+    
+    .cta-section h2 {
+        font-size: 2rem;
+    }
+}

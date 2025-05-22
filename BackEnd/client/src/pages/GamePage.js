@@ -118,100 +118,107 @@ const renderStars = () => {
   }
 
   return (
-    <Container className="game-page-container">
-      {notification && (
-        <Alert 
-          variant={notification.variant} 
-          className="game-notification"
-          onClose={() => setNotification(null)} 
-          dismissible
-        >
-          {notification.message}
-        </Alert>
-      )}
-      
-      <Row className="game-header-row">
-        <Col lg={8}>
-          <div className="game-title-wrapper">
-            <h1 className="game-title">{game.name}</h1>
-            <Badge bg="secondary" className="game-genre-badge">{game.genre}</Badge>
+  <Container className="game-page-container">
+    {notification && (
+      <Alert 
+        variant={notification.variant} 
+        className="game-notification"
+        onClose={() => setNotification(null)} 
+        dismissible
+      >
+        {notification.message}
+      </Alert>
+    )}
+    
+    <Row className="game-header-row">
+      <Col lg={8}>
+        <div className="game-title-wrapper">
+          <h1 className="game-title">{game.name}</h1>
+          <Badge bg="secondary" className="game-genre-badge">{game.genre}</Badge>
+        </div>
+        
+        <div className="game-rating-section">
+          <div className="game-rating-stars">{renderStars()}</div>
+          <div className="game-rating-value">
+            Рейтинг: <strong>{game.rating?.toFixed(1) || 0}</strong>/5
+            {userRating > 0 && (
+              <span className="user-rating-badge">Ваша оценка: {userRating}</span>
+            )}
           </div>
-          
-          <div className="game-rating-section">
-            <div className="game-rating-stars">{renderStars()}</div>
-            <div className="game-rating-value">
-              Рейтинг: <strong>{game.rating?.toFixed(1) || 0}</strong>/5
-              {userRating > 0 && (
-                <span className="user-rating-badge">Ваша оценка: {userRating}</span>
-              )}
+        </div>
+      </Col>
+    </Row>
+    
+    <Row className="game-main-row align-items-start">
+      <Col md={8}>
+        <Row>
+          <Col md={7} className="game-media-col">
+            <div className="game-image-wrapper">
+              <Image 
+                src={process.env.REACT_APP_API_URL + game.img} 
+                alt={game.name}
+                className="game-main-image"
+                fluid
+              />
             </div>
-          </div>
-        </Col>
-      </Row>
-      
-      <Row className="game-main-row">
-        <Col md={5} className="game-media-col">
-          <div className="game-image-container">
-            <Image 
-              src={process.env.REACT_APP_API_URL + game.img} 
-              alt={game.name}
-              className="game-main-image"
-              fluid
-            />
-          </div>
-        </Col>
+          </Col>
+          
+          <Col md={5} className="game-purchase-col">
+            <Card className="game-purchase-card">
+              <Card.Body>
+                <div className="game-price-wrapper">
+                  <span className="game-price">{game.price} $</span>
+                  {game.discount > 0 && (
+                    <span className="game-discount-badge">-{game.discount}%</span>
+                  )}
+                </div>
+                
+                <div className="game-actions">
+                  {isInBasket ? (
+                    <Button 
+                      variant="danger" 
+                      className="game-action-btn"
+                      onClick={handleRemoveFromBasket}
+                    >
+                      Убрать из корзины
+                    </Button>
+                  ) : (
+                    <Button 
+                      variant="success" 
+                      className="game-action-btn"
+                      onClick={handleAddToBasket}
+                    >
+                      Добавить в корзину
+                    </Button>
+                  )}
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
         
-        <Col md={4} className="game-info-col">
-          <Card className="game-specs-card">
-            <Card.Body>
-              <Card.Title className="game-specs-title">Описание</Card.Title>
-              <div className="game-specs-list">
-                {game.info?.map((info, index) => (
-                  <div key={info.id} className="game-spec-item">
-                    <span className="game-spec-title">{info.title}:</span>
-                    <span className="game-spec-value">{info.description}</span>
-                  </div>
-                ))}
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-        
-        <Col md={3} className="game-purchase-col">
-          <Card className="game-purchase-card">
-            <Card.Body>
-              <div className="game-price-wrapper">
-                <span className="game-price">{game.price} $</span>
-                {game.discount > 0 && (
-                  <span className="game-discount-badge">-{game.discount}%</span>
-                )}
-              </div>
-              
-              <div className="game-actions">
-                {isInBasket ? (
-                  <Button 
-                    variant="danger" 
-                    className="game-action-btn"
-                    onClick={handleRemoveFromBasket}
-                  >
-                    Убрать из корзины
-                  </Button>
-                ) : (
-                  <Button 
-                    variant="success" 
-                    className="game-action-btn"
-                    onClick={handleAddToBasket}
-                  >
-                    Добавить в корзину
-                  </Button>
-                )}
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-  );
+        {/* Переносим блок с описанием сюда */}
+        <Row className="mt-4">
+          <Col>
+            <Card className="game-specs-card">
+              <Card.Body>
+                <Card.Title className="game-specs-title">Описание</Card.Title>
+                <div className="game-specs-list">
+                  {game.info?.map((info, index) => (
+                    <div key={info.id} className="game-spec-item">
+                      <span className="game-spec-title">{info.title}:</span>
+                      <span className="game-spec-value">{info.description}</span>
+                    </div>
+                  ))}
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  </Container>
+);
 });
 
 export default GamePage;

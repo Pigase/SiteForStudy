@@ -3,6 +3,37 @@
   max-width: 1200px;
 }
 
+/* Добавляем выравнивание по верху для основной строки */
+.game-main-row {
+  align-items: flex-start;
+}
+
+/* Исправляем контейнер для изображения */
+.game-media-col {
+  display: flex;
+  align-items: flex-start; /* Выравниваем по верху */
+}
+
+.game-image-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.game-main-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.game-main-image:hover {
+  transform: scale(1.02);
+}
+
+/* Остальные стили остаются без изменений */
 .game-header {
   margin-bottom: 2rem;
   padding-bottom: 1rem;
@@ -17,16 +48,6 @@
 
 .game-meta {
   margin-top: 1rem;
-}
-
-.game-main-image {
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
-}
-
-.game-main-image:hover {
-  transform: scale(1.02);
 }
 
 .section-title {
@@ -171,4 +192,42 @@
   .specs-grid {
     grid-template-columns: 1fr;
   }
+}
+.game-page-container {
+  padding: 2rem 0;
+  max-width: 1200px;
+}
+
+.game-main-row {
+  align-items: flex-start;
+}
+
+.game-media-col {
+  padding-right: 15px;
+}
+
+.game-image-wrapper {
+  width: 100%;
+  position: relative;
+  padding-top: 100%; /* Сохраняем квадратное соотношение */
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game-main-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-purchase-col {
+  padding-left: 15px;
+}
+
+.game-specs-card {
+  margin-top: 20px;
 }
