@@ -19,7 +19,7 @@ export const getBasket = async () => {
 };
 
 
-export const removeFromBasket = async (gameId) => {
-    const { data } = await $authHost.delete(`api/basket/${gameId}`);
+export const removeFromBasket = async (pcId) => {
+    const { data } = await $authHost.delete(`api/basket/${pcId}`);
     return data;
 };

@@ -9,8 +9,7 @@ import { addToBasket, getBasket, removeFromBasket } from '../http/basketAPI';
 const GamePage = observer(() => {
   const [game, setGame] = useState({ info: [] });
   const [userRating, setUserRating] = useState(0);
-  const [basket, setBasket] = useState([]);
-   const [isInBasket, setIsInBasket] = useState(false);
+  const [isInBasket, setIsInBasket] = useState(false);
   const [basketItemId, setBasketItemId] = useState(null);
   const { user } = useContext(Context);
   const { id } = useParams();
@@ -22,45 +21,53 @@ const GamePage = observer(() => {
       checkUserRating(id).then(data => {
         if (data) setUserRating(data.rate);
       });
+      loadBasketData(); // Загружаем данные корзины при монтировании
     }
   }, [id, user.isAuth]);
 
   const loadBasketData = async () => {
-        try {
-            const basketData = await getBasket();
-            setBasket(Array.isArray(basketData.basket_games) ? basketData.basket_games : []);
-            const basketItem = basketData.basket_games?.find(item => item.gameId === parseInt(id));
-            setIsInBasket(!!basketItem);
-            setBasketItemId(basketItem?.id || null);
-        } catch (e) {
-            console.error("Ошибка загрузки корзины:", e);
-        }
-    };
+    try {
+      const basketData = await getBasket();
+      const basketItems = Array.isArray(basketData.basket_games) ? basketData.basket_games : [];
+      const basketItem = basketItems.find(item => item.gameId === parseInt(id));
+      
+      setIsInBasket(!!basketItem);
+      setBasketItemId(basketItem?.id ||  null);
+    } catch (e) {
+      console.error("Ошибка загрузки корзины:", e);
+    }
+  };
 
   const handleAddToBasket = async () => {
-        try {
-            const response = await addToBasket(game.id);
-            await loadBasketData();
-            console.log("Товар добавлен в корзину:", response);
-            
-        } catch (e) {
-            console.error("Ошибка добавления в корзину:", e);
-            alert(e.response?.data?.message || 'Ошибка добавления в корзину');
-        }
-    };
+    try {
+      const response = await addToBasket(game.id);
+      await loadBasketData();
+      window.location.reload();
+      console.log("Товар добавлен в корзину:", response);
+    } catch (e) {
+      console.error("Ошибка добавления в корзину:", e);
+      alert(e.response?.data?.message||  'Ошибка добавления в корзину');
+    }
+  };
 
-    const handleRemoveFromBasket = async () => {
-        if (window.confirm("Вы действительно хотите удалить этот товар из корзины?")) {
-            try {
-                await removeFromBasket(basketItemId);
-                await loadBasketData();
-                console.log("Товар удален из корзины");
-            } catch (e) {
-                console.error("Ошибка удаления из корзины:", e);
-                alert(e.response?.data?.message || 'Ошибка удаления из корзины');
-            }
-        }
-    };
+  const handleRemoveFromBasket = async () => {
+    if (!basketItemId) {
+      alert('Не найден ID элемента корзины');
+      return;
+    }
+    
+    if (window.confirm("Вы действительно хотите удалить игру из корзины?")) {
+      try {
+        await removeFromBasket(basketItemId);
+        await loadBasketData();
+        window.location.reload();
+        console.log("Товар удален из корзины");
+      } catch (e) {
+        console.error("Ошибка удаления:", e.response?.data || e);
+        alert(e.response?.data?.message || 'Ошибка при удалении');
+      }
+    }
+  };
 
   const handleRate = async (rate) => {
   if (!user.isAuth) {
@@ -129,16 +136,14 @@ const GamePage = observer(() => {
           >
             <h3>{game.price} $</h3>
             {isInBasket ? (
-            <Button variant="outline-danger" onClick={handleRemoveFromBasket}>
-            В корзине
-          </Button>
-        ) : (
-        <Button variant="outline-success" onClick={() => {
-                handleAddToBasket(); 
-        }}>
+              <Button variant="outline-danger" onClick={handleRemoveFromBasket}>
+                В корзине
+              </Button>
+            ) : (
+              <Button variant="outline-success" onClick={handleAddToBasket}>
                 Добавить в корзину
-        </Button> 
-        )}
+              </Button> 
+            )}
           </Card>
         </Col>
       </Row>
