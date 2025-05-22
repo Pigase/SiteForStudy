@@ -4,10 +4,14 @@ import { useParams } from 'react-router-dom';
 import { fetchOneGame, rateGame, checkUserRating } from '../http/GameAPI';
 import { Context } from '../index';
 import { observer } from 'mobx-react-lite';
+import { addToBasket, getBasket, removeFromBasket } from '../http/basketAPI';
 
 const GamePage = observer(() => {
   const [game, setGame] = useState({ info: [] });
   const [userRating, setUserRating] = useState(0);
+  const [basket, setBasket] = useState([]);
+   const [isInBasket, setIsInBasket] = useState(false);
+  const [basketItemId, setBasketItemId] = useState(null);
   const { user } = useContext(Context);
   const { id } = useParams();
 
@@ -20,6 +24,43 @@ const GamePage = observer(() => {
       });
     }
   }, [id, user.isAuth]);
+
+  const loadBasketData = async () => {
+        try {
+            const basketData = await getBasket();
+            setBasket(Array.isArray(basketData.basket_games) ? basketData.basket_games : []);
+            const basketItem = basketData.basket_games?.find(item => item.gameId === parseInt(id));
+            setIsInBasket(!!basketItem);
+            setBasketItemId(basketItem?.id || null);
+        } catch (e) {
+            console.error("Ошибка загрузки корзины:", e);
+        }
+    };
+
+  const handleAddToBasket = async () => {
+        try {
+            const response = await addToBasket(game.id);
+            await loadBasketData();
+            console.log("Товар добавлен в корзину:", response);
+            
+        } catch (e) {
+            console.error("Ошибка добавления в корзину:", e);
+            alert(e.response?.data?.message || 'Ошибка добавления в корзину');
+        }
+    };
+
+    const handleRemoveFromBasket = async () => {
+        if (window.confirm("Вы действительно хотите удалить этот товар из корзины?")) {
+            try {
+                await removeFromBasket(basketItemId);
+                await loadBasketData();
+                console.log("Товар удален из корзины");
+            } catch (e) {
+                console.error("Ошибка удаления из корзины:", e);
+                alert(e.response?.data?.message || 'Ошибка удаления из корзины');
+            }
+        }
+    };
 
   const handleRate = async (rate) => {
   if (!user.isAuth) {
@@ -87,7 +128,17 @@ const GamePage = observer(() => {
             style={{width:300, height:300, fontSize:32, border: '5px solid lightgray'}}
           >
             <h3>{game.price} $</h3>
-            <Button variant={"outline-dark"}>Добавить в корзину</Button>
+            {isInBasket ? (
+            <Button variant="outline-danger" onClick={handleRemoveFromBasket}>
+            В корзине
+          </Button>
+        ) : (
+        <Button variant="outline-success" onClick={() => {
+                handleAddToBasket(); 
+        }}>
+                Добавить в корзину
+        </Button> 
+        )}
           </Card>
         </Col>
       </Row>

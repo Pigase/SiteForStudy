@@ -14,6 +14,8 @@ const Basket = sequelize.define('basket',{
 
 const BasketGame = sequelize.define('basket_game',{
     id:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    basketId: { type: DataTypes.INTEGER, allowNull: false },
+    gameId: { type: DataTypes.INTEGER, allowNull: false },
 })
 
 const Game = sequelize.define('game',{
@@ -56,8 +58,8 @@ Basket.belongsTo(User)
 User.hasMany(Rating)
 Rating.belongsTo(User)
 
-Basket.hasMany(BasketGame)
-BasketGame.belongsTo(Basket)
+Basket.hasMany(BasketGame, { foreignKey: 'basketId' });
+BasketGame.belongsTo(Basket, { foreignKey: 'basketId' });
 
 Type.hasMany(Game)
 Game.belongsTo(Type)
